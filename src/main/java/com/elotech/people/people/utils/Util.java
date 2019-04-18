@@ -18,7 +18,8 @@ public class Util {
     public static void insertTestData(PagingAndSortingRepository contatoDao, PagingAndSortingRepository personDao) {
         Person person;
         List<Person> people = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        int totalToAdd = 50;
+        for (int i = 0; i < totalToAdd; i++) {
             person = new EntityBuilder().createPerson();
             person.setId(0);
             person.setName(person.getName() + " " + (i + 1));
@@ -26,7 +27,7 @@ public class Util {
         }
 
         Contato contato;
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < totalToAdd*4; i++) {
             contato = new EntityBuilder().createContato();
             contato.setId(0);
             contato.setName(contato.getName() + " " + (i + 1));

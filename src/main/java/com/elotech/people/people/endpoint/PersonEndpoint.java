@@ -44,8 +44,8 @@ public class PersonEndpoint {
 
     @GetMapping(path = "people/findByName/{name}")
     public ResponseEntity<?> findEntityByName(@PathVariable String name, Pageable pageable){
-        int total = dao.countByNameIgnoreCaseContaining(name);
-        List<Person> people = dao.findByNameIgnoreCaseContaining(name, pageable);
+        int total = dao.countByNameIgnoreCaseContaining(name.trim());
+        List<Person> people = dao.findByNameIgnoreCaseContaining(name.trim(), pageable);
         Page<Person> peoplePage = new PageImpl<>(people, pageable, total);
         return new ResponseEntity<>(peoplePage, HttpStatus.OK);
     }

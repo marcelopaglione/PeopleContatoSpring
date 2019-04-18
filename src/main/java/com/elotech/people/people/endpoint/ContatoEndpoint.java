@@ -51,7 +51,7 @@ public class ContatoEndpoint {
 
     @GetMapping(path = "contatos/findByName/{name}")
     public ResponseEntity<?> findEntityByName(@PathVariable String name) {
-        return new ResponseEntity<>(contatoDao.findByNameIgnoreCaseContaining(name), HttpStatus.OK);
+        return new ResponseEntity<>(contatoDao.findByNameIgnoreCaseContaining(name.trim()), HttpStatus.OK);
     }
 
     @PostMapping(path = "contatos")
@@ -92,11 +92,13 @@ public class ContatoEndpoint {
         entity.setPerson(personDao.save(entity.getPerson()));
         List<Contato> contatosResponse = new ArrayList<>();
         entity.getContatos().forEach(contato -> {
-            Util.verifyIfEntityExists(contato.getId(), contatoDao);
             contatosResponse.add(contatoDao.save(contato));
         });
         entity.setContatos(contatosResponse);
-        return new ResponseEntity<>(contatosResponse, HttpStatus.OK);
+        PersonContato response = new PersonContato();
+        response.setPerson(entity.getPerson());
+        response.setContatos(contatosResponse);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "contatos/{id}")
