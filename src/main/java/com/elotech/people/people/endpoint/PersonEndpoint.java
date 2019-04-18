@@ -50,6 +50,14 @@ public class PersonEndpoint {
         return new ResponseEntity<>(peoplePage, HttpStatus.OK);
     }
 
+    @GetMapping(path = "people/findByExactName/{name}")
+    public ResponseEntity<?> findEntityByExactName(@PathVariable String name, Pageable pageable){
+        int total = dao.countByNameIgnoreCaseContaining(name);
+        List<Person> people = dao.findByName(name, pageable);
+        Page<Person> peoplePage = new PageImpl<>(people, pageable, total);
+        return new ResponseEntity<>(peoplePage, HttpStatus.OK);
+    }
+
     @PostMapping(path = "people")
     @Transactional
     public ResponseEntity<?> save(@Valid @RequestBody Person entity){

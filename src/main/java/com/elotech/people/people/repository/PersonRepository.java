@@ -11,4 +11,6 @@ public interface PersonRepository extends PagingAndSortingRepository<Person, Lon
     List<Person> findByNameIgnoreCaseContaining(String name);
     int countByNameIgnoreCaseContaining(String name);
     List<Person> findByNameIgnoreCaseContaining(String name, Pageable pageable);
+    List<Person> findByName(String name, Pageable pageable);
+
 }
